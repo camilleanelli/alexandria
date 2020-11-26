@@ -2,6 +2,7 @@
 
 FactoryBot.define do
   factory :publisher do
-    name { "O'Reilly" }
+    name { 'publisher' }
+    id { 'id_publisher' }
   end
 end
