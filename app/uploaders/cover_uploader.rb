@@ -16,8 +16,7 @@ class CoverUploader < CarrierWave::Uploader::Base
   end
 
   def default_url
-    url = "uploads/#{model.class.to_s.underscore}/#{mounted_as}/default/cover.jpg"
-    url.prepend('/') unless url[0] == '/'
+    url = "/uploads/#{model.class.to_s.underscore}/#{mounted_as}/default/cover.jpg"
     url
   end
 

@@ -19,7 +19,7 @@ FactoryBot.define do
     isbn_13 { '9780134077703' }
     description { 'MyText' }
     released_on { '2020-11-25' }
-    publisher
+    publisher { nil }
     author { association :margaret }
   end
 
@@ -30,7 +30,7 @@ FactoryBot.define do
     isbn_13 { '9781593275617' }
     description { 'MyText' }
     released_on { '2020-11-25' }
-    publisher
+    publisher { nil }
     author { association :amelie }
   end
 end

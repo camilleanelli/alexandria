@@ -9,7 +9,7 @@ class CreateBooks < ActiveRecord::Migration[6.0]
       t.string :isbn_13, index: true
       t.text :description
       t.date :released_on
-      t.references :publisher, null: false, foreign_key: true, index: true
+      t.references :publisher, foreign_key: true, index: true
       t.references :author, null: false, foreign_key: true, index: true
 
       t.timestamps

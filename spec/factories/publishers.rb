@@ -3,6 +3,5 @@
 FactoryBot.define do
   factory :publisher do
     name { 'publisher' }
-    id { 'id_publisher' }
   end
 end

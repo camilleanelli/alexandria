@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 2020_11_26_074646) do
     t.string "isbn_13"
     t.text "description"
     t.date "released_on"
-    t.integer "publisher_id", null: false
+    t.integer "publisher_id"
     t.integer "author_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

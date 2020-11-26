@@ -1,1 +1,6 @@
 PORO = Plain old ruby object
+
+Indexer les colonnes ça fait quoi au juste ?
+
+est ce qu'on a besoins d'avoir un db cleaner pour les tests en Rails 6 ?
+
