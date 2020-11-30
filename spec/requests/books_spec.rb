@@ -9,21 +9,23 @@ RSpec.describe 'Books', type: :request do
 
   let(:books) { [book1, book2, book3] }
 
-  # describe 'GET /api/books' do
-  #   before { get '/api/books' }
+  describe 'GET /api/books' do
+    context 'default behavior' do
+      before { get '/api/books' }
 
-  #   it 'receives http status 200' do
-  #     expect(response.status).to eq 200
-  #   end
+      it 'receives http status 200' do
+        expect(response.status).to eq 200
+      end
 
-  #   it 'receive a json response with data' do
-  #     expect(json_body['data']).to_not be_nil
-  #   end
+      it 'receive a json response with data' do
+        expect(json_body['data']).to_not be_nil
+      end
 
-  #   it 'receives 3 items in the data' do
-  #     expect(json_body['data'].size).to eq 3
-  #   end
-  # end
+      it 'receives 3 items in the data' do
+        expect(json_body['data'].size).to eq 3
+      end
+    end
+  end
 
   describe 'field picking' do
     context 'with the fields parameter' do
@@ -43,6 +45,62 @@ RSpec.describe 'Books', type: :request do
         json_body['data'].each do |book|
           expect(book.keys).to eq BookPresenter.build_attributes.map(&:to_s)
         end
+      end
+    end
+  end
+
+  describe 'pagination ' do
+    context 'when asking for the first page ' do
+      before { get '/api/books?page=1&per=2' }
+
+      it 'receives http status 200' do
+        expect(response.status).to eq 200
+      end
+
+      it 'receives only two books' do
+        expect(json_body['data'].size).to eq 2
+      end
+
+      it 'receives the response with the link header' do
+        expect(response.header['Link'].split(', ').first).to eq(
+          '<http://www.example.com/api/books?page=2&per=2>; rel="next"'
+        )
+      end
+    end
+
+    context 'when asking for the second page' do
+      before { get('/api/books?page=2&per=2') }
+
+      it 'receives HTTP status 200' do
+        expect(response.status).to eq 200
+      end
+
+      it 'receives only one book' do
+        expect(json_body['data'].size).to eq 1
+      end
+    end
+
+    context 'when sending invalid page and per paramters' do
+      before { get '/api/books?page=fake&per=2' }
+
+      it 'receive http status 400' do
+        expect(response.status).to eq(400)
+      end
+    end
+
+    context 'when sending invalid params' do
+      before { get '/api/books?page=fake&per=10' }
+
+      it 'receives http status 400' do
+        expect(response.status).to eq 400
+      end
+
+      it 'receives an error' do
+        expect(json_body['error']).to_not be nil
+      end
+
+      it 'receives page=fake as an invalid params' do
+        expect(json_body['error']['invalid_params']).to eq 'page=fake'
       end
     end
   end

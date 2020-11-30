@@ -32,4 +32,25 @@ RSpec.describe BasePresenter do
       expect(BasePresenter.build_attributes).to eq %w[id title]
     end
   end
+
+  describe '.related_to' do
+    it 'stores the correct value' do
+      BasePresenter.related_to :author, :publisher
+      expect(BasePresenter.relations).to eq %w[author publisher]
+    end
+  end
+
+  describe '.sort_by' do
+    it 'stores the correct value' do
+      BasePresenter.sort_by :id, :title
+      expect(BasePresenter.sort_attributes).to eq %w[id title]
+    end
+  end
+
+  describe '.filter_by' do
+    it 'stores the correct value' do
+      BasePresenter.filter_by :title
+      expect(BasePresenter.filter_attributes).to eq ['title']
+    end
+  end
 end
