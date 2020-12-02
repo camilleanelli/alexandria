@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Books', type: :request do
-  let!(:book1) { create(:book) }
+  let!(:book1) { create(:book, title: 'title_1') }
   let!(:book2) { create(:book2) }
   let!(:book3) { create(:book3) }
 
@@ -127,6 +127,31 @@ RSpec.describe 'Books', type: :request do
 
       it 'receives sort=fid as invalid param' do
         expect(json_body['error']['invalid_params']).to eq 'sort=fid'
+      end
+    end
+  end
+
+  describe 'filtering' do
+    context 'with valid filtering param "q[title_cont]=1"' do
+      it 'receives title_1 back' do
+        get('/api/books?q[title_cont]=1')
+        expect(json_body['data'].first['id']).to eq book1.id
+        expect(json_body['data'].size).to eq 1
+      end
+    end
+    context 'with invalid filtering param "q[ftitle_cont]=Microscope"' do
+      before { get('/api/books?q[ftitle_cont]=2') }
+
+      it 'gets "400 Bad Request" back' do
+        expect(response.status).to eq 400
+      end
+
+      it 'receives an error' do
+        expect(json_body['error']).to_not be nil
+      end
+
+      it 'receives "q[ftitle_cont]=2" as an invalid param' do
+        expect(json_body['error']['invalid_params']).to eq 'q[ftitle_cont]=2'
       end
     end
   end
