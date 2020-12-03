@@ -6,7 +6,7 @@ RSpec.describe 'FieldPicker' do
   # We define 'let' in cascade where each one of them is used by the # one below. This allows us to override any of them easily in a
   # specific context.
   let(:rails_tutorial) { create(:book) }
-  let(:params) { { fields: 'id,title,subtitle' } }
+  let(:params) { { fields: 'id,title' } }
   let(:presenter) { BookPresenter.new(rails_tutorial, params) }
   let(:field_picker) { FieldPicker.new(presenter) }
   # We don't want our tests to rely too much on the actual implementation of # the book presenter. Instead, we stub the method 'build_attributes'
@@ -17,7 +17,7 @@ RSpec.describe 'FieldPicker' do
   end
 
   describe '#pick' do
-    context 'with the "fields" parameter containing "id,title,subtitle"' do
+    context 'with the "fields" parameter containing "id,title"' do
       it 'updates the presenter "data" with the book "id" and "title"' do
         expect(field_picker.pick.data).to eq('id' => rails_tutorial.id, 'title' => 'Le portrait de Doriane Grey')
       end
@@ -36,6 +36,16 @@ RSpec.describe 'FieldPicker' do
           'id' => rails_tutorial.id,
           'title' => 'Le portrait de Doriane Grey',
           'author_id' => 1
+        )
+      end
+    end
+
+    context 'with invalid attributes fid' do
+      let(:params) { { fields: 'fid,title' } }
+
+      it 'raises a RepresentationBuilderError' do
+        expect { field_picker.pick }.to(
+          raise_error(RepresentationBuilderError)
         )
       end
     end

@@ -2,10 +2,9 @@
 
 class BooksController < ApplicationController
   def index
-    books = filter(sort(paginate(Book.all))).map do |book|
-      FieldPicker.new(BookPresenter.new(book, params)).pick
-    end
+    books = orchestrate_query(Book.all)
+    serializer = Alexandria::Serializer.new(data: books, params: params, actions: %i[fields embeds])
 
-    render json: { data: books }.to_json
+    render json: serializer.to_json
   end
 end
