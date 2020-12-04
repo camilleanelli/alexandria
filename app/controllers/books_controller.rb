@@ -31,6 +31,12 @@ class BooksController < ApplicationController
     end
   end
 
+  def destroy
+    book = find_book
+    book.destroy
+    render status: :no_content
+  end
+
   private
 
   def find_book

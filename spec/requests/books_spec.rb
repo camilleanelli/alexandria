@@ -118,7 +118,6 @@ RSpec.describe 'Books', type: :request do
         expect(Book.first.title).to eq 'another_title'
       end
     end
-
     context 'with invalid parameters' do
       let(:params) { { title: '' } }
 
@@ -134,6 +133,26 @@ RSpec.describe 'Books', type: :request do
 
       it 'does not add a record in the database' do
         expect(Book.first.title).to eq 'title_1'
+      end
+    end
+  end
+
+  describe 'DELETE /api/books/:id' do
+    context 'with existing resource' do
+      before { delete "/api/books/#{book1.id}" }
+
+      it 'gets HTTP status 204' do
+        expect(response.status).to eq 204
+      end
+      it 'deletes the book from the database' do
+        expect(Book.count).to eq 2
+      end
+    end
+
+    context 'with nonexistent resource' do
+      it 'gets HTTP status 404' do
+        delete '/api/books/2314323'
+        expect(response.status).to eq 404
       end
     end
   end
