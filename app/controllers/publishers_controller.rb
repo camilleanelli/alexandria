@@ -38,7 +38,9 @@ class PublishersController < ApplicationController
 
   def find_publisher
     @publisher = Publisher.find_by!(id: params[:id])
+    # TODO: il faudra peu etre instancié dans le cas ou pas de params id
   end
+  alias resource find_publisher
 
   def publisher_params
     params.require(:data).permit(:name)

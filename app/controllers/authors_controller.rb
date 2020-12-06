@@ -38,7 +38,9 @@ class AuthorsController < ApplicationController
 
   def find_author
     @author = Author.find_by!(id: params[:id])
+    # TODO: il faudra peu etre instancié dans le cas ou pas de params id
   end
+  alias resource find_author
 
   def author_params
     params.require(:data).permit(:given_name, :family_name)

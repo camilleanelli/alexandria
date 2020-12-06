@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class BasePresenter
+  include Rails.application.routes.url_helpers
   # c'est la classe parente des presenters de chaque ressources
   # pour définir des méthodes qui permettent d'autoriser les attributs
   # Define a class level instance variable

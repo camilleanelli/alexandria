@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# frozen_string_literal: false
 
 class BookPresenter < BasePresenter
   build_with :id, :title, :subtitle, :isbn_10, :isbn_13, :description,
@@ -8,6 +8,7 @@ class BookPresenter < BasePresenter
   filter_by :id, :title, :isbn_10, :isbn_13, :released_on, :publisher_id, :author_id
 
   def cover
-    @object.cover.url.to_s
+    path = @object.cover.url.to_s
+    "#{root_url}#{path}"
   end
 end
