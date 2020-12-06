@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Book < ApplicationRecord
+  include PgSearch::Model
+  multisearchable against: %i[title subtitle description]
+
   belongs_to :publisher, optional: true
   belongs_to :author
 

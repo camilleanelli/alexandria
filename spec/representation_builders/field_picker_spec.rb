@@ -35,7 +35,7 @@ RSpec.describe 'FieldPicker' do
         expect(field_picker2.send(:pick).data).to eq(
           'id' => rails_tutorial.id,
           'title' => 'Le portrait de Doriane Grey',
-          'author_id' => 1
+          'author_id' => rails_tutorial.author_id
         )
       end
     end

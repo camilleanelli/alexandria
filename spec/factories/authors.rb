@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
+  factory :author do
+    given_name { 'example' }
+    family_name { 'example' }
+  end
+
   factory :oscar, class: Author do
     given_name { 'Oscar' }
     family_name { 'Wilde' }
