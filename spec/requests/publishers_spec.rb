@@ -3,6 +3,14 @@
 # spec/requests/publishers_spec.rb
 require 'rails_helper'
 RSpec.describe 'Publishers', type: :request do
+  before do
+    allow_any_instance_of(PublishersController).to(
+      receive(:validate_auth_scheme).and_return(true)
+    )
+    allow_any_instance_of(PublishersController).to(
+      receive(:authenticate_client).and_return(true)
+    )
+  end
   let!(:publisher1) { create(:publisher, name: 'the publisher') }
   let!(:publisher2) { create(:publisher, name: 'pragmatic studio') }
   let!(:publisher3) { create(:publisher, name: 'super book') }

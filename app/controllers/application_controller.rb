@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::API
+  include Authentication
+
   rescue_from QueryBuilderError, with: :builder_error
   rescue_from RepresentationBuilderError, with: :builder_error
   # on va catcher l'erreur par défaut dans le cas ou la resource est introuvable

@@ -3,6 +3,14 @@
 require 'rails_helper'
 
 RSpec.describe 'Authors', type: :request do
+  before do
+    allow_any_instance_of(AuthorsController).to(
+      receive(:validate_auth_scheme).and_return(true)
+    )
+    allow_any_instance_of(AuthorsController).to(
+      receive(:authenticate_client).and_return(true)
+    )
+  end
   let!(:author1) { create(:oscar, given_name: 'Oscar', family_name: 'Wild') }
   let!(:author2) { create(:oscar, given_name: 'Victor', family_name: 'Hugos') }
   let!(:author3) { create(:oscar, given_name: 'Margaret', family_name: 'Atwood') }
