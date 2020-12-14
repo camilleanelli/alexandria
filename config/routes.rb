@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resources :books
     resources :authors
     resources :publishers
+    resources :users, except: :put
     root to: 'books#index'
     # on ajoute le params :text dans l'url du search
     get '/search/:text', to: 'search#index'
